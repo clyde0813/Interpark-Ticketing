@@ -1,0 +1,9 @@
+#OTP
+totp = pyotp.TOTP('NF2HG6LPOVZHI2LDNNSXIYTZMNWHSZDF')
+while 1:
+    input_otp = input('OTP :')
+    if input_otp == totp.now():
+        print("Welcome")
+        break
+    else:
+        print("Wrong OTP")

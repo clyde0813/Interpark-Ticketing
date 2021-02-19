@@ -209,8 +209,6 @@ def all_go():
     go()
 
 
-
-
 def credit():
     driver.switch_to.default_content()
     driver.find_element_by_xpath('//*[@id="SmallNextBtnImage"]').click()
@@ -366,18 +364,6 @@ code_time.grid(row=16, column=1)
 
 full_time = (datetime.datetime.combine(datetime.date(1, 1, 1), datetime.datetime.now().time()) + datetime.timedelta(
     seconds=20)).time()
-
-if __name__ != "__main__":
-    driver.switch_to.frame(driver.find_element_by_tag_name('iframe'))
-    driver.find_element_by_name('userId').send_keys('eric3285')
-    driver.find_element_by_id('userPwd').send_keys('Eric3371!')
-    driver.find_element_by_id('btn_login').click()
-    showcode_entry.insert(0, '19018396')
-    calender_entry.insert(0, '0')
-    date_entry.insert(0, '10')
-    round_entry.insert(0, '1')
-    ticket_entry.insert(0, '2')
-    full_entry.insert(0, str(full_time)[:8])
 
 clock_time()
 dp.mainloop()

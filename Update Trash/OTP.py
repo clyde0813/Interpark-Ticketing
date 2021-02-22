@@ -1,3 +1,6 @@
+import pyotp
+import sys
+
 totp = pyotp.TOTP('OB4XI2DPNZWW623QN5RWQ33J')
 while True:
     input_otp = input('OTP :')

@@ -10,10 +10,11 @@ import numpy
 import time, datetime
 import cv2 as cv
 from pytesseract import image_to_string
+import os
 
 opt = webdriver.ChromeOptions()
 opt.add_argument('window-size=800,600')
-driver = webdriver.Chrome(executable_path="D:\SynologyDrive\Python Projects\InterPark\es\chromedriver.exe", options=opt)
+driver = webdriver.Chrome(executable_path=os.getcwd() + "\\chromedriver.exe", options=opt)
 wait = WebDriverWait(driver, 10)
 url = "https://ticket.interpark.com/Gate/TPLogin.asp"
 driver.get(url)
@@ -81,9 +82,9 @@ def captcha():
     driver.switch_to.frame(seat1_frame)
     image = driver.find_element_by_id('imgCaptcha')
     image = image.screenshot_as_png
-    with open("D:\SynologyDrive\Python Projects\InterPark\captcha.png", "wb") as file:
+    with open(os.getcwd() + "\\captcha.png", "wb") as file:
         file.write(image)
-    image = cv.imread("D:\SynologyDrive\Python Projects\InterPark\captcha.png")
+    image = cv.imread(os.getcwd() + "\\captcha.png")
     # Set a threshold value for the image, and save
     image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
     image = cv.adaptiveThreshold(image, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 91, 1)

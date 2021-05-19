@@ -14,7 +14,7 @@ import os
 
 opt = webdriver.ChromeOptions()
 opt.add_argument('window-size=800,600')
-driver = webdriver.Chrome(executable_path=os.getcwd() + "\\chromedriver.exe", options=opt)
+driver = webdriver.Chrome(executable_path=os.getcwd() + "\\es\\chromedriver.exe", options=opt)
 wait = WebDriverWait(driver, 10)
 url = "https://ticket.interpark.com/Gate/TPLogin.asp"
 driver.get(url)
@@ -43,36 +43,32 @@ def seat_macro():
     driver.switch_to.frame(seat1_frame)
     seat2_frame = driver.find_element_by_name("ifrmSeatDetail")
     driver.switch_to.frame(seat2_frame)
-    wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'stySeat')))
-    len_seatn = len(driver.find_elements_by_class_name('stySeat'))
-    print(len_seatn)
-    len_VIP = len(
-        driver.find_elements_by_css_selector('img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/1_90.gif"]'))
-    print(len_VIP)
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/1_90.gif"]')))
+    seats = driver.find_elements_by_css_selector('img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/1_90.gif"]')
+    vip_list = []
+    vip2_list = []
+    for i in seats:
+        if "1층-1열" in i.get_attribute("title"):
+            vip_list.append(i)
+        elif "1층-2열" in i.get_attribute("title"):
+            vip2_list.append(i)
+    print(len(vip_list))
+    print(len(vip2_list))
     shot = 0
-    VIP = driver.find_elements_by_css_selector('img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/1_90.gif"]')
-    R = driver.find_elements_by_css_selector('img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/2_90.gif"]')
-    S = driver.find_elements_by_css_selector('img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/3_90.gif"]')
-    A = driver.find_elements_by_css_selector('img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/4_90.gif"]')
-    for x in range(0, len_seatn):
+    for x in range(0, len(vip_list) + len(vip2_list)):
         try:
-            VIP[x].click()
+            vip_list[x].click()
             shot = shot + 1
         except:
+            print("12313")
             try:
-                R[x].click()
-                shot = shot + 1
+                vip2_list[x-shot].click()
+                shot += 1
+
             except:
-                try:
-                    S[x].click()
-                    shot = shot + 1
-                except:
-                    try:
-                        A[x].click()
-                        shot = shot + 1
-                    except:
-                        break
+                print("22")
         if shot == int(ticket_entry.get()):
+            print("32")
             break
 
 
@@ -156,7 +152,6 @@ def seat_again():
     driver.switch_to.frame(driver.find_element_by_id("ifrmSeat"))
     driver.execute_script('$("ifrmSeatDetail").contentWindow.location.reload();')
     driver.execute_script('fnInitSeat();')
-    driver.switch_to.default_content()
     seat_macro()
     driver.switch_to.default_content()
     driver.switch_to.frame(driver.find_element_by_id("ifrmSeat"))
@@ -164,7 +159,6 @@ def seat_again():
 
 
 def go2():
-    driver.switch_to.default_content()
     seat_macro()
     driver.switch_to.default_content()
     driver.switch_to.frame(driver.find_element_by_id("ifrmSeat"))

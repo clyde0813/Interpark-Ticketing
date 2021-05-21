@@ -50,53 +50,63 @@ def seat_macro():
     vip2_list = []
     vip3_list = []
     for i in seats:
-        if "1층-2열" in i.get_attribute("title"):
+        if "B블록2열" in i.get_attribute("title"):
             vip_list.append(i)
-        elif "1층-3열" in i.get_attribute("title"):
+        elif "B블록3열" in i.get_attribute("title"):
             vip2_list.append(i)
-        elif "1층-4열" in i.get_attribute("title"):
+        elif "B블록4열" in i.get_attribute("title"):
             vip3_list.append(i)
-    print("1열 : ", len(vip_list))
-    print("2열 : ", len(vip2_list))
-    print("3열 : ", len(vip3_list))
+    print("2열 : ", len(vip_list))
+    print("3열 : ", len(vip2_list))
+    print("4열 : ", len(vip3_list))
     shot = 0
     shot1 = 0
     shot2 = 0
     shot3 = 0
     for x in range(0, len(vip_list) + len(vip2_list) + len(vip3_list)):
         try:
+            print("2열")
             vip_list[x].click()
             shot += 1
             shot1 += 1
         except:
-            print("2열")
             try:
+                print("3열")
                 if x == 1 and shot2 == 0:
-                    x = x - shot
+                    x = 0
                 elif x == 1 and shot2 == 1:
-                    x = x
-                elif x == 2 and shot2 < 2:
-                    x = x - shot
+                    x = 1
+                elif x == 2 and shot2 == 0:
+                    x = 0
+                elif x == 2 and shot2 == 1:
+                    x = 1
                 elif x == 2 and shot2 == 2:
-                    x = x
+                    x = 2
 
                 vip2_list[x].click()
                 shot += 1
                 shot2 += 1
             except:
                 try:
+                    print("4열")
                     if x == 1 and shot3 == 0:
-                        x = x - shot
+                        x = 0
                     elif x == 1 and shot3 == 1:
-                        x = x
-                    elif x == 2 and shot3 < 2:
-                        x = x - shot
+                        x = 1
+                    elif x == 2 and shot3 == 0:
+                        x = 0
+                    elif x == 2 and shot3 == 1:
+                        x = 1
                     elif x == 2 and shot3 == 2:
-                        x = x
-                    elif x == 3 and shot3 < 3:
-                        x = x - 1
+                        x = 2
+                    elif x == 3 and shot3 == 0:
+                        x = 0
+                    elif x == 3 and shot3 == 1:
+                        x = 1
+                    elif x == 3 and shot3 == 2:
+                        x = 2
                     elif x == 3 and shot3 == 3:
-                        x = x
+                        x = 3
                     vip3_list[x].click()
                     shot += 1
                     shot3 += 1

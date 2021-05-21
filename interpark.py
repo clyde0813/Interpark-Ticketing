@@ -45,32 +45,70 @@ def seat_macro():
     driver.switch_to.frame(seat2_frame)
     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/1_90.gif"]')))
     seats = driver.find_elements_by_css_selector('img[src="http://ticketimage.interpark.com/TMGSNAS/TMGS/G/1_90.gif"]')
+    print(len(seats))
     vip_list = []
     vip2_list = []
+    vip3_list = []
     for i in seats:
-        if "1층-1열" in i.get_attribute("title"):
+        if "1층-2열" in i.get_attribute("title"):
             vip_list.append(i)
-        elif "1층-2열" in i.get_attribute("title"):
+        elif "1층-3열" in i.get_attribute("title"):
             vip2_list.append(i)
-    print(len(vip_list))
-    print(len(vip2_list))
+        elif "1층-4열" in i.get_attribute("title"):
+            vip3_list.append(i)
+    print("1열 : ", len(vip_list))
+    print("2열 : ", len(vip2_list))
+    print("3열 : ", len(vip3_list))
     shot = 0
-    for x in range(0, len(vip_list) + len(vip2_list)):
+    shot1 = 0
+    shot2 = 0
+    shot3 = 0
+    for x in range(0, len(vip_list) + len(vip2_list) + len(vip3_list)):
         try:
             vip_list[x].click()
-            shot = shot + 1
+            shot += 1
+            shot1 += 1
         except:
-            print("12313")
+            print("2열")
             try:
-                vip2_list[x-shot].click()
+                if x == 1 and shot2 == 0:
+                    x = x - shot
+                elif x == 1 and shot2 == 1:
+                    x = x
+                elif x == 2 and shot2 < 2:
+                    x = x - shot
+                elif x == 2 and shot2 == 2:
+                    x = x
+
+                vip2_list[x].click()
                 shot += 1
-
+                shot2 += 1
             except:
-                print("22")
+                try:
+                    if x == 1 and shot3 == 0:
+                        x = x - shot
+                    elif x == 1 and shot3 == 1:
+                        x = x
+                    elif x == 2 and shot3 < 2:
+                        x = x - shot
+                    elif x == 2 and shot3 == 2:
+                        x = x
+                    elif x == 3 and shot3 < 3:
+                        x = x - 1
+                    elif x == 3 and shot3 == 3:
+                        x = x
+                    vip3_list[x].click()
+                    shot += 1
+                    shot3 += 1
+                except:
+                    print("예외")
+                    break
         if shot == int(ticket_entry.get()):
-            print("32")
+            print("종료")
             break
+        # elif shot >= ) and :
 
+    print("종료 종료")
 
 def captcha():
     driver.switch_to.default_content()
@@ -163,34 +201,39 @@ def go2():
     driver.switch_to.default_content()
     driver.switch_to.frame(driver.find_element_by_id("ifrmSeat"))
     driver.find_element_by_id('NextStepImage').click()
-    while 1:
+    print("이선좌")
+    while True:
         try:
             seat_again()
-            pass
+            print("가")
         except UnexpectedAlertPresentException:
-            pass
-
-
+            print("나")
+        except NoSuchElementException:
+            break
+        except ElementNotInteractableException:
+            break
 def go():
     code_time.delete(0, END)
     start_time = time.time()
     try:
+        print("가")
         driver.find_element_by_class_name('closeBtn').click()
         date_select()
         try:
+            print("나")
             captcha()
-            pass
         except NoSuchElementException:
+            print("다")
             go2()
-            pass
     except NoSuchElementException:
+        print("라")
         date_select()
         try:
+            print("마")
             captcha()
-            pass
         except NoSuchElementException:
+            print("바")
             go2()
-            pass
     except UnexpectedAlertPresentException:
         all_go()
     finally:
@@ -249,11 +292,16 @@ def clock_time():
 
 
 def full_auto():
+    time2 = 0
     while True:
         time1 = time.strftime('%X')
-        print(time1)
-        if time1 == full_entry.get():
+        if time1 != time2:
+            print(time1)
+        elif time1 == full_entry.get():
             all_go()
+            break
+        time2 = time.strftime('%X')
+
 
 
 dp = Tk()

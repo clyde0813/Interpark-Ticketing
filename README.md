@@ -5,3 +5,6 @@
 
 최적화 version (아주 천천히 진행중) -> 
 https://github.com/clyde0813/Interpark 
+
+Captcha Decryption Algorithm Description
+![2021 컴퓨터공학과 셈틀인의날_판넬시안_캡챠해독알고리즘_박정후](https://user-images.githubusercontent.com/76196439/158118414-f138b38f-c922-49a6-bf88-a0c2718ca24b.jpg)

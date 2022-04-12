@@ -3,7 +3,8 @@
 
 ![image](https://user-images.githubusercontent.com/76196439/158314342-b11f306b-f7e7-4d97-9135-eb87edfaba4b.png)
 
-연구목적으로 개발되었음을 알립니다.
+코딩입문할때 개발되었음을 알립니다.
+코드가 매우 중구난방임.
 
 최적화 version (아주 천천히 진행중) -> 
 https://github.com/clyde0813/Interpark 
